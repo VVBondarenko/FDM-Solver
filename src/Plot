@@ -1,0 +1,6 @@
+#!/usr/bin/gnuplot -persist
+
+set pm3d; set palette
+set dgrid3d 33,33
+set hidden3d
+splot "../output/out1.dat" with line
