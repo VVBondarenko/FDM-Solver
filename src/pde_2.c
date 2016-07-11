@@ -50,8 +50,8 @@ void init_cond	(double ***array, int sizeX, int sizeY, double xh, double yh)
 	//}
 	for(i = 0; i < sizeY; i++)
 	{
-		(*array)[0][i] = -3;
-		(*array)[sizeX-1][i] = 3.;
+		(*array)[0][i] = -0.2;
+		//(*array)[sizeX-1][i] = 0.2;
 	}
 }
 
@@ -70,16 +70,22 @@ void iteration	(double ***array, double ***Narray, int sizeX, int sizeY, double 
 		(*Narray)[i][sizeY-1] 	= (*Narray)[i][sizeY-2];
 	}
 	
-	for( i=2*sizeX/5; i<3*sizeX/5; i++)
+	//for(i = 0; i < sizeY; i++)
+	//{
+		//(*array)[0][i] = -0.2;
+		////(*array)[sizeX-1][i] = 0.2;
+	//}
+	
+	for( i=6*sizeX/15; i<9*sizeX/15; i++)
 	{
-		(*Narray)[i][2*sizeX/5] 	= (*Narray)[i][2*sizeX/5-1];
-		(*Narray)[i][3*sizeX/5] = (*Narray)[i][3*sizeX/5+1];
+		(*Narray)[i][6*sizeX/15] 	= (*Narray)[i][6*sizeX/15-1];
+		(*Narray)[i][9*sizeX/15] 	= (*Narray)[i][9*sizeX/15+1];
 	}
 	
-	for( i=2*sizeY/5; i<3*sizeY/5; i++)
+	for( i=7*sizeY/15; i<8*sizeY/15; i++)
 	{
-		(*Narray)[2*sizeY/5][i] 	= (*Narray)[2*sizeY/5-1][i];
-		(*Narray)[3*sizeY/5][i] = (*Narray)[3*sizeY/5+1][i];
+		(*Narray)[7*sizeY/15][i] 	= (*Narray)[7*sizeY/15-1][i];
+		(*Narray)[8*sizeY/15][i] 	= (*Narray)[8*sizeY/15+1][i];
 	}
 }
 //interpolating from values in B to A
@@ -100,14 +106,14 @@ void interpol	(double ***arr_a, int saX, int saY, double xha, double yha, 	doubl
 	//init_cond(arr_a, saX, saY, xha, yha);
 }
 
-void output_grid(double **array, int sizeX, int sizeY, double xh, double yh)
+void output_grid(double **array, int sizeX, int sizeY, double xh, double yh, FILE *opt)
 {
 	int i, j;
 	for(i=0;i<sizeX;i++)
 	{
 		for(j=0;j<sizeY;j++)
 		{
-			printf("%f %f %f \n", xh*i, yh*j, array[i][j]);
+			fprintf(opt,"%f %f %f \n", xh*i, yh*j, array[i][j]);
 		}
 	}
 }
@@ -145,13 +151,56 @@ void output_field(double **array, int sizeX, int sizeY, double xh, double yh, FI
 			vy = -0.5*(array[i][j-1]+array[i][j+1]-2.*array[i][j])/yh;
 			v = sqrt(vx*vx+vy*vy);			
 			
-			if(!((i>2*sizeX/5 && i<3*sizeX/5) && (j>2*sizeY/5 && j<3*sizeY/5)))
+			if(!((i>6*sizeX/15 && i<9*sizeX/15) && (j>7*sizeY/15 && j<8*sizeY/15)))
 				fprintf(opt,"%f %f %f %f\n", xh*i, yh*j, 
-					vx/v/30.,
-					vy/v/30.);
+					vx/v/50.,
+					vy/v/50.);
+			else fprintf(opt,"%f %f %f %f\n", xh*i, yh*j, 
+					0.,
+					0.);
 		}
 	}
 }
+void output_field_color(double **array, int sizeX, int sizeY, double xh, double yh, FILE *opt)
+{
+	int i, j;
+	double 	vx,vy,v;
+	for(i=1;i<sizeX-1;i++)
+	{
+		for(j=1;j<sizeY-1;j++)
+		{
+			vx = -0.5*(array[i-1][j]+array[i+1][j]-2.*array[i][j])/xh; 
+			vy = -0.5*(array[i][j-1]+array[i][j+1]-2.*array[i][j])/yh;
+			v = sqrt(vx*vx+vy*vy);			
+			
+			if(!((i>6*sizeX/15 && i<9*sizeX/15) && (j>7*sizeY/15 && j<8*sizeY/15)))
+				fprintf(opt,"%f %f %f\n", xh*i, yh*j, 
+					v);
+			else fprintf(opt,"%f %f %f\n", xh*i, yh*j, 
+					0.);
+		}
+	}
+}
+
+//void draw_vector_line(double **array, 
+						//int sizeX, int sizeY, 
+						//double xh, double yh, 
+						//FILE *opt,
+						//double xst, double yst, int nstesps)
+//{
+	//int i, j, k;
+	//double 	vx,vy,v;
+	//for(k=0;i<nstesps;i++)
+	//{
+		//vx = -0.5*(array[i-1][j]+array[i+1][j]-2.*array[i][j])/xh; 
+		//vy = -0.5*(array[i][j-1]+array[i][j+1]-2.*array[i][j])/yh;
+		//v = sqrt(vx*vx+vy*vy);			
+		//if(!((i>7*sizeX/15 && i<8*sizeX/15) && (j>7*sizeY/15 && j<8*sizeY/15)))
+			//fprintf(opt,"%f %f %f\n", xh*i, yh*j, 
+				//v);
+	//}
+//}
+
 
 
 void opt_mstk_line(double **array, int sizeX, int sizeY, double xh, double yh, FILE *opt)
