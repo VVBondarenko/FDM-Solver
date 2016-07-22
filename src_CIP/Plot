@@ -1,0 +1,9 @@
+#!/usr/bin/gnuplot -persist
+
+set pm3d at s
+set palette rgbformulae 33,13,10
+set dgrid3d 65, 65 #129,129
+set hidden3d
+set xlabel "x"
+set ylabel "y"
+splot "../output/out3.dat" with line

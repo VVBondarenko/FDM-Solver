@@ -28,14 +28,12 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=0
-FILE_NAME_0=1416;C;0;EUTF-8;1;1;0;%2Fhome%2Fvbondarenko%2Fprojects%2FFDM-Solver%2Fsrc%2Fmain_2.c;0;4
-FILE_NAME_1=4365;C;0;EUTF-8;1;1;0;%2Fhome%2Fvbondarenko%2Fprojects%2FFDM-Solver%2Fsrc%2Fpde_2.c;0;4
-FILE_NAME_2=0;None;0;EUTF-8;1;1;0;%2Fhome%2Fvbondarenko%2Fprojects%2FFDM-Solver%2Fsrc%2FPlot_field;0;4
-FILE_NAME_3=1220;C;0;EUTF-8;1;1;0;%2Fhome%2Fvbondarenko%2Fprojects%2FFDM-Solver%2Fsrc%2Fmain.c;0;4
+current_page=1
+FILE_NAME_0=1286;C;0;EUTF-8;1;1;0;%2Fhome%2Fvbondarenko%2Fprojects%2FFDM-Solver%2Fsrc_CIP%2Fpde.c;0;4
+FILE_NAME_1=1775;C;0;EUTF-8;1;1;0;%2Fhome%2Fvbondarenko%2Fprojects%2FFDM-Solver%2Fsrc_CIP%2Fmain.c;0;4
 
 [VTE]
-last_dir=/home/vbondarenko
+last_dir=/home/vbondarenko/projects/FDM-Solver/output
 
 [build-menu]
 CFT_00_LB=_Compile

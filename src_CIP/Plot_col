@@ -1,0 +1,7 @@
+#!/usr/bin/gnuplot -persist
+
+set ticslevel 0
+set pm3d map; set palette
+set dgrid3d 129,129
+set hidden3d
+splot "../output/press.dat" with pm3d
