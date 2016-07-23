@@ -59,14 +59,15 @@ void init_cond	(double ***array, int sizeX, int sizeY, double xh, double yh)
 void iteration	(double ***array, double ***Narray, int sizeX, int sizeY, double xh, double yh/*, double *err*/)
 {
 	int i,j;
-	double kx = xh*xh, ky = yh*yh/*, err*/;
+	double kx = xh*xh, ky = yh*yh/*, err = 0.*/;
 	
 	for(i=1; i<sizeX-1; i++)
 		for(j=1; j<sizeY-1; j++)
 		{
 			(*Narray)[i][j] = 0.5 / (kx+ky) * (ky*( (*array)[i+1][j]+ (*array)[i-1][j])+kx*( (*array)[i][j+1]+ (*array)[i][j-1]) /*- kx*ky*2.0*exp(xh*i+yh*j)*/);
-
+			//err =  fabs((*array)[i][j]-(*Narray)[i][j]);
 		}
+	//return err;
 }
 
 
@@ -83,8 +84,8 @@ void interpol	(double ***arr_a, int saX, int saY, double xha, double yha, 	doubl
 	 for(j = 0; j < sbY; j++){
 	  for(m = 0; m < kx; m++){
 	   for(n = 0; n < ky; n++){
-	     if(m >= n )	(*arr_a)[i*kx+m][j*ky+n] = xrat *((*arr_b)[i+1][j] - (*arr_b)[i][j])* m + yrat *((*arr_b)[i+1][j+1]-(*arr_b)[i+1][j]) * n + (*arr_b)[i][j];
-	     else 	(*arr_a)[i*kx+m][j*ky+n] = xrat *((*arr_b)[i+1][j+1] - (*arr_b)[i][j+1])* m + yrat *((*arr_b)[i][j+1]-(*arr_b)[i][j]) * n + (*arr_b)[i][j];
+	     if(m >= n )(*arr_a)[i*kx+m][j*ky+n] = xrat *((*arr_b)[i+1][j] - (*arr_b)[i][j])* m + yrat *((*arr_b)[i+1][j+1]-(*arr_b)[i+1][j]) * n + (*arr_b)[i][j];
+	     else 		(*arr_a)[i*kx+m][j*ky+n] = xrat *((*arr_b)[i+1][j+1] - (*arr_b)[i][j+1])* m + yrat *((*arr_b)[i][j+1]-(*arr_b)[i][j]) * n + (*arr_b)[i][j];
 	   }
 	  }
 	 }

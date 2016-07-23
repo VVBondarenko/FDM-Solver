@@ -8,7 +8,7 @@ import numpy as np
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-data = np.genfromtxt('../output/out1_mstk.dat')
+data = np.genfromtxt('../output/out1.dat')
 x = data[:,0]
 y = data[:,1]
 z = data[:,2]
@@ -24,5 +24,5 @@ surf = ax.plot_surface(X, Y, Z, rstride=2, cstride=2, cmap=cm.jet,
 
 ax.set_zlim3d(np.min(Z), np.max(Z))
 fig.colorbar(surf)
-plt.title("1st err plot")
+plt.title("1st plot")
 plt.show()

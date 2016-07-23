@@ -24,5 +24,5 @@ surf = ax.plot_surface(X, Y, Z, rstride=2, cstride=2, cmap=cm.jet,
 
 ax.set_zlim3d(np.min(Z), np.max(Z))
 fig.colorbar(surf)
-
+plt.title("2nd plot")
 plt.show()

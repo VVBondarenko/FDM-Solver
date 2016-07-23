@@ -8,7 +8,7 @@ import numpy as np
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-data = np.genfromtxt('../output/out1_mstk.dat')
+data = np.genfromtxt('../output/out1.dat')
 x = data[:,0]
 y = data[:,1]
 z = data[:,2]
