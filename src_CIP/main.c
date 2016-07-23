@@ -19,7 +19,7 @@ int main()
     init_cond(&U, sa, sa, sta,sta);
 
     memcpy(&Unew,&U,sizeof(Unew));
-    for(i = 0; i<000 /*&& (err>0.001 || err == 0.0)*/; i++)
+    for(i = 0; i<1000 /*&& (err>0.001 || err == 0.0)*/; i++)
     {
         iteration(&U,&Unew, sa,sa, sta,sta);
         memcpy(&U,&Unew,sizeof(Unew));
@@ -64,16 +64,19 @@ int main()
 		{
 			for(j=1; j<sa-1; j++)
 			{
-				Unew[i][j] = 0.25*(U[i+1][j]+U[i-1][j]+U[i][j+1]+U[i][j-1]);
+				Unew[i][j] = 0.25*(U[i+1][j]+U[i-1][j]+U[i][j+1]+U[i][j-1])
+							+0.125*sta*(Ux[i+1][j]-Ux[i-1][j]+Uy[i][j+1]-Uy[i][j-1]);
 			}
 		}
 				
-		for (i = 1; i < sa-1; i++)
+		for (i = 2; i < sa-2; i++)
 		{
-			for (j = 1; j < sa-1; j++)
+			for (j = 2; j < sa-2; j++)
 			{
-				Ux[i][j] = (U[i+1][j]-U[i-1][j])/sta*0.5;
-				Uy[i][j] = (U[i][j+1]-U[i][j-1])/sta*0.5;
+				//Ux[i][j] = (U[i+1][j]-U[i-1][j])/sta*0.5;
+				//Uy[i][j] = (U[i][j+1]-U[i][j-1])/sta*0.5;
+				Ux[i][j] = (8.*(U[i+1][j]-U[i-1][j])+U[i-2][j]-U[i+2][j])/sta/12.;
+				Uy[i][j] = (8.*(U[i][j+1]-U[i][j-1])+U[i][j-2]-U[i][j+2])/sta/12.;
 			}
 		}
 		for (i = 0; i < sa; i++)
@@ -83,6 +86,8 @@ int main()
 			Uy[i][0]	= (U[i][1]-U[i][0])/sta;
 			Uy[i][sa-1]	= (U[i][sa-1]-U[i][sa-2])/sta;
 		}
+        memcpy(&U,&Unew,sizeof(Unew));
+		
 	}
 	
     outs = fopen("../output/out2.dat", "w");
@@ -123,7 +128,8 @@ int main()
     //outs = fopen("../output/out3_mstk.dat", "w");
     //opt_mstk_line(Ub, sb,sb, stb,stb, outs);
     //fclose(outs);
-
+	i = system("../bin/plot_mstk_1.py & ../bin/plot_mstk_2.py &");
+	//i = system("../bin/plot_mstk_2.py");
     return 0;
 }
 
